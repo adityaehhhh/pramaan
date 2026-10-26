@@ -1,0 +1,51 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: pramaan-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PROJECT_NAME=PRAMAAN Digital Academic Records Platform
+      - ENVIRONMENT=production
+      - SECRET_KEY=${SECRET_KEY:-pramaan_demo_super_secret_jwt_key_2024_secure_signing_token}
+      - DATABASE_URL=sqlite:////app/data/pramaan.db
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
+    volumes:
+      - pramaan_data:/app/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/public-stats"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - pramaan-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pramaan-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://backend:8000
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - pramaan-network
+
+volumes:
+  pramaan_data:
+    driver: local
+
+networks:
+  pramaan-network:
+    driver: bridge

@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pramaan-bg: #F7F8FC;
+  --color-pramaan-navy: #14213D;
+  --color-pramaan-blue: #315CF5;
+  --color-pramaan-blue-hover: #2347DB;
+  --color-pramaan-teal: #14B8A6;
+  --color-pramaan-teal-hover: #0D9488;
+  --color-pramaan-card: #FFFFFF;
+  --color-pramaan-muted: #64748B;
+  --color-pramaan-border: #E5EAF2;
+  --color-pramaan-border-strong: #CBD5E1;
+  --color-pramaan-success: #10B981;
+  --color-pramaan-warning: #F59E0B;
+  --color-pramaan-danger: #EF4444;
+}
+
+:root {
+  --bg-primary: #F7F8FC;
+  --text-primary: #14213D;
+  --accent-blue: #315CF5;
+  --accent-teal: #14B8A6;
+  --card-bg: #FFFFFF;
+  --text-muted: #64748B;
+  --border-color: #E5EAF2;
+}
+
+/* Universal base resets ensuring no default browser links or button styling */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+
+input, select, textarea {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid #315CF5;
+  outline-offset: 2px;
+}
+
+body {
+  background-color: #F7F8FC;
+  color: #14213D;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Custom continuous horizontal ticker animation */
+@keyframes ticker-slide {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker-slide 38s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker {
+    animation: none;
+    overflow-x: auto;
+  }
+}
+
+/* Clean Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
